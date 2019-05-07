@@ -1,4 +1,4 @@
-# HIT IZ TOOL
+# BUILDING HIT IZ TOOL
 
 Environment to build war files for hit tools.
 
@@ -35,4 +35,46 @@ We destroy the container at the end of the procedeure, but the image is still av
 ```bash
 docker images
 ```
- 
+# DEPLOYING HIT IZ TOOL 
+
+To deploy the new war file :
+
+git clone https://github.com/usnistgov/hit-base-tool-deploy.git
+##### iztool-cni
+1) Switch to the `iztool-cni` branch
+- `git checkout iztool-cni`
+2) Remove old db files to ensure new resource bundle data will be loaded
+- `rm -r ./data/app/db`
+3) copy the new generated iztool.war file to container-config/hit-base-tool/app/ . Please provide the full path of the freshly generated iztool.war
+- `cp iztool.war container-config/hit-base-tool/app/`
+4) build the hit-base-tool
+-`cd hit-base-tool-deploy/container-config/hit-base-tool/app`
+In order to make use of the new iztool.war file, we need to modify the dockerfile such as:
+```Dockerfile
+# Pull base image.
+FROM tomcat-base
+COPY ./config/context.xml /opt/tomcat/conf/
+
+# RUN wget --quiet --no-cookies https://hit-2015.nist.gov/wars/iztool-cdc.war -O /opt/tomcat/webapps/hit-base-tool.war
+COPY ./iztool.war /opt/tomcat/webapps/hit-base-tool.war
+#RUN mkdir /opt/data/
+#RUN chmod 766 /opt/data
+#COPY ./config/app-log4j.properties /opt/data/
+ENV HIT_LOGGING_DIR /opt/data/logs/
+ENV HIT_LOGGING_CONFIG /opt/data/config/app-log4j.properties
+ENV RELOAD_DB true
+ENV URL_SCHEME https
+
+VOLUME ["/opt/data/","/opt/tomcat/logs/"]
+
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+
+```
+ - `docker build -t hit-base-tool .`
+
+
+3) Starts the containers
+Go back to the directory where we can deploy.  
+ - `cd container-config`
+ - `./deploy.sh`
+4) Access the tool at https://localhost/
