@@ -52,7 +52,9 @@ Make sure that the name of the war file is **iztool.war**.
 4) build the hit-base-tool
 - `cd container-config/hit-base-tool/app`
 In order to make use of the new iztool.war file, we need to modify the dockerfile such as:
+
 Make sure that the line *COPY ./iztool.war /opt/tomcat/webapps/hit-base-tool.war* is **NOT** commented out.
+
 And that the line ~~RUN wget --quiet --no-cookies https://hit-2015.nist.gov/wars/iztool-cdc.war -O /opt/tomcat/webapps/hit-base-tool.war~~ is commented out.
 
 ```Dockerfile
