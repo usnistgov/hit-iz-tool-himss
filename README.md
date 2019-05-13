@@ -1,4 +1,4 @@
-# BUILDING HIT IZ TOOL
+# BUILDING HIMSS IZ TOOL
 
 Environment to build war files for hit tools.
 
