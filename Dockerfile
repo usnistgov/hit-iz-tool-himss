@@ -12,27 +12,42 @@ MAINTAINER  Desire Banse
 
 # Prepare installation of Oracle Java 8
 ENV JAVA_VER 8
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+# ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+# ENV JAVA_HOME /opt/java-jdk/jdk1.8.0_211
 
 RUN apt-get update
 RUN apt-get -y install curl gnupg
 
-# Install git, wget, Oracle Java8
-RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
-    echo 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
-    echo 'deb http://archive.ubuntu.com/ubuntu trusty main universe' >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
+# Install Java8 from oracle binaries
+# RUN mkdir /opt/java-jdk
+# COPY jdk-8u211-linux-x64.tar.gz /root/
+# RUN tar -C /opt/java-jdk -zxf /root/jdk-8u211-linux-x64.tar.gz
+# RUN update-alternatives --install /usr/bin/java java /opt/java-jdk/jdk1.8.0_211/bin/java 1
+# RUN update-alternatives --install /usr/bin/javac javac /opt/java-jdk/jdk1.8.0_211/bin/javac 1
+
+RUN echo 'deb http://archive.ubuntu.com/ubuntu xenial main universe' >> /etc/apt/sources.list && \
     apt-get update && \
     apt-get install -y git wget && \
-    echo oracle-java${JAVA_VER}-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VER}-installer oracle-java${JAVA_VER}-set-default && \
+    apt-get install -y openjdk-8-jdk && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm -rf /var/cache/oracle-jdk${JAVA_VER}-installer
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install git, wget, Oracle Java8
+#RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" >> /etc/apt/sources.list && \
+#    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" >> /etc/apt/sources.list && \
+#    echo 'deb http://archive.ubuntu.com/ubuntu xenial main universe' >> /etc/apt/sources.list && \
+#    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
+#    apt-get update && \
+#    apt-get install -y git wget && \
+#    echo oracle-java${JAVA_VER}-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+#    apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VER}-installer oracle-java${JAVA_VER}-set-default && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+#    rm -rf /var/cache/oracle-jdk${JAVA_VER}-installer
 
 # Set Oracle Java as the default Java
-RUN update-java-alternatives -s java-8-oracle
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
+# RUN update-java-alternatives -s java-8-oracle
+# RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
 
 # Install maven 3.3.9
 RUN wget --no-verbose -O /tmp/apache-maven-3.3.9-bin.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && \
