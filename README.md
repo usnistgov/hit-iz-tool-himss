@@ -35,7 +35,7 @@ We destroy the container at the end of the procedeure, but the image is still av
 ```bash
 docker images
 ```
-# DEPLOYING HIT IZ TOOL
+# DEPLOYING HIMSS IZ TOOL
 
 To deploy the new war file :
 
