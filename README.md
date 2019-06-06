@@ -39,12 +39,20 @@ docker images
 
 To deploy the new war file :
 
-- `git clone https://github.com/usnistgov/hit-base-tool-deploy.git`
-- `cd hit-base-tool-deploy`
-##### iztool-cni
-1) Switch to the `iztool-cni` branch
-- `git checkout iztool-cni`
+- `git clone https://github.com/usnistgov/hit-iz-tool-infra.git`
+- `cd hit-iz-tool-infra`
+##### iztool-cni-new
+1) Switch to the `iztool-cni-new` branch
+- `git checkout iztool-cni-new`
 2) Remove old db files to ensure new resource bundle data will be loaded
+- rm -fr ../data/hit-base-tool-account-db/data/*
+- rm -fr ../data/hit-base-tool-account-db/logs/*
+- rm -fr ../data/hit-base-tool/db/data/*
+- rm -fr ../data/hit-base-tool/db/logs/*
+- chmod -R 777 ../data/hit-base-tool-account-db/data
+- chmod -R 777 ../data/hit-base-tool-account-db/logs
+- chmod -R 777 ../data/hit-base-tool/db/logs
+- chmod -R 777 ../data/hit-base-tool/db/data
 - `rm -r ./data/app/db`
 3) copy the new generated iztool.war file to container-config/hit-base-tool/app/ . Please provide the full path of the freshly generated iztool.war
 - `cp iztool.war container-config/hit-base-tool/app/`
