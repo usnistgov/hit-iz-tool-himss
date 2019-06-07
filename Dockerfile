@@ -69,27 +69,27 @@ RUN cd /root/hit-core/ && mvn clean
 COPY settings.xml /root/.m2/
 
 # continue installation
-RUN cd /root/hit-core/ && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore
+RUN cd /root/hit-core/ && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hl7-profile-validation
 RUN cd /root/hl7-profile-validation && git checkout develop
-RUN cd /root/hl7-profile-validation && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore
+RUN cd /root/hl7-profile-validation && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-core-xml
 RUN cd /root/hit-core-xml/ && git checkout master
-RUN cd /root/hit-core-xml && mvn -pl '!hit-core-xml-service,!hit-core-xml-api' install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore -Dmaven.test.skip
-RUN cd /root/hit-core-xml/hit-core-xml-domain && mvn -U install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore -Dmaven.test.skip
-RUN cd /root/hit-core-xml/hit-core-xml-repo && mvn -U install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore -Dmaven.test.skip
+RUN cd /root/hit-core-xml && mvn -pl '!hit-core-xml-service,!hit-core-xml-api' install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
+RUN cd /root/hit-core-xml/hit-core-xml-domain && mvn -U install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
+RUN cd /root/hit-core-xml/hit-core-xml-repo && mvn -U install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-xml-validation.git
-RUN cd /root/hit-xml-validation && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore
+RUN cd /root/hit-xml-validation && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 RUN cd /root/ && git clone https://github.com/usnistgov/schematronValidation.git
-RUN cd /root/schematronValidation && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore
+RUN cd /root/schematronValidation && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-core-hl7v2.git
 RUN cd /root/hit-core-hl7v2 && git checkout master
-RUN cd /root/hit-core-hl7v2 && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore
+RUN cd /root/hit-core-hl7v2 && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 # tools for the server side and client side
 # RUN cd /root/ && wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
@@ -121,6 +121,6 @@ RUN cd /root/hit-iz-tool/hit-iz-web/client && bower install --allow-root
 RUN cd /root/ && npm install -g grunt
 RUN cd /root/hit-iz-tool/hit-iz-web/client && grunt build
 
-RUN cd /root/hit-iz-tool/ && mvn -U clean install -Djavax.net.ssl.trustStore=/root/hit-dev.nist.gov.keystore -Dmaven.test.skip
+RUN cd /root/hit-iz-tool/ && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
 
 EXPOSE 80 443
