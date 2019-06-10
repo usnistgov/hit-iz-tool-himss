@@ -89,6 +89,7 @@ RUN cd /root/schematronValidation && mvn -U clean install -Dmaven.wagon.http.ssl
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-core-hl7v2.git
 RUN cd /root/hit-core-hl7v2 && git checkout master
+COPY pom.xml /root/hit-core-hl7v2/pom.xml
 RUN cd /root/hit-core-hl7v2 && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 # tools for the server side and client side
@@ -114,6 +115,7 @@ RUN cd /root/ && npm install -g bower
 # build the IZ tool
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-iz-tool
 RUN cd /root/hit-iz-tool && git checkout apps/cni-new
+COPY pom_iz.xml /root/hit-iz-tool/hit-iz-web/pom.xml 
 RUN cd /root/hit-iz-tool/hit-iz-web/client && npm install
 
 RUN cd /root/hit-iz-tool/hit-iz-web/client && bower install --allow-root

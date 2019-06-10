@@ -1,0 +1,194 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.nist.hit.core.hl7v2</groupId>
+	<artifactId>hit-core-hl7v2</artifactId>
+	<version>1.0.20-SNAPSHOT</version>
+	<name>hit-core-hl7v2</name>
+	<description>hit-core-hl7v2</description>
+	<packaging>pom</packaging>
+	<modules>
+		<module>hit-core-hl7v2-domain</module>
+		<module>hit-core-hl7v2-repo</module>
+		<module>hit-core-hl7v2-service</module>
+		<module>hit-core-hl7v2-api</module>
+	</modules>
+
+	<properties>
+		<core.version>1.0.48</core.version>
+		<hitcore.version>1.0.25-SNAPSHOT</hitcore.version>
+		<additionalparam>-Xdoclint:none</additionalparam>
+		<java.version>1.8</java.version>
+		<resourcesValidation.version>1.0.1</resourcesValidation.version>
+	</properties>
+
+	<dependencies>
+
+
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-domain</artifactId>
+			<version>${hitcore.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-service</artifactId>
+			<version>${hitcore.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-repo</artifactId>
+			<version>${hitcore.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-transport</artifactId>
+			<version>${hitcore.version}</version>
+		</dependency>
+
+		<dependency>
+            <groupId>gov.nist</groupId>
+            <artifactId>hl7-v2-validation</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.nist.healthcare.hl7.v2.unifiedreport</groupId>
+            <artifactId>validation-proxy</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.nist.healthcare.hl7.v2.unifiedreport</groupId>
+            <artifactId>report-filter</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
+        		<dependency>
+			<groupId>gov.nist.healthcare.resources</groupId>
+			<artifactId>validation</artifactId>
+			<version>${resourcesValidation.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>gov.nist.hit.hl7</groupId>
+			<artifactId>profile-validation</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>gov.nist</groupId>
+					<artifactId>hl7-v2-validation</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>gov.nist.healthcare.hl7.v2.unifiedreport</groupId>
+					<artifactId>validation-proxy</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>gov.nist.healthcare.hl7.v2.unifiedreport</groupId>
+					<artifactId>report-filter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>gov.nist.healthcare.resources</groupId>
+					<artifactId>validation</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+
+
+	</dependencies>
+
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<!-- plugin to handle compile version -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+					<excludes>
+            <exclude>**/log4j-over-slf4j*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<releaseProfiles>release</releaseProfiles>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-api</artifactId>
+							<version>1.9.2</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-provider-gitexe</artifactId>
+							<version>1.9.2</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+							<configuration>
+								<additionalparam>-Xdoclint:none</additionalparam>
+								<failOnError>false</failOnError>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>https://hit-dev.nist.gov:9001/repository/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>https://hit-dev.nist.gov:9001/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<scm>
+		<connection>scm:git:https://haffo@github.com/haffo/hit-core-hl7v2.git</connection>
+		<url>scm:git:https://haffo@github.com/haffo/hit-core-hl7v2.git</url>
+		<developerConnection>scm:git:https://haffo@github.com/haffo/hit-core-hl7v2.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+</project>
