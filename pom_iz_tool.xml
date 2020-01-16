@@ -1,0 +1,143 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.nist.hit.iz</groupId>
+	<artifactId>hit-iz-tool</artifactId>
+	<version>1.4.0-SNAPSHOT</version>
+	<name>hit-iz-tool</name>
+	<description>Immunization tool</description>
+	<packaging>pom</packaging>
+	<modules>
+		<module>hit-iz-resource</module>
+		<module>hit-iz-domain</module>
+		<module>hit-iz-repo</module>
+		<module>hit-iz-service</module>
+		<module>hit-iz-ws</module>
+		<module>hit-iz-web</module>
+	</modules>
+
+	<properties>
+		<spring.version>4.3.8.RELEASE</spring.version>
+		<hithl7v2.version>1.0.21</hithl7v2.version>
+		<hitcore.version>1.0.26</hitcore.version>
+		<core.version>1.0.48</core.version>
+		<java.version>1.8</java.version>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>gov.nist.hit.core.hl7v2</groupId>
+			<artifactId>hit-core-hl7v2-service</artifactId>
+			<version>${hithl7v2.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+
+				<!-- plugin to handle compile version -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.9</version>
+					<configuration>
+						<additionalProjectnatures>
+							<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						</additionalProjectnatures>
+						<additionalBuildcommands>
+							<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+						</additionalBuildcommands>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>true</downloadJavadocs>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<releaseProfiles>release</releaseProfiles>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-api</artifactId>
+							<version>1.9.2</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-provider-gitexe</artifactId>
+							<version>1.9.2</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-compiler-plugin
+										</artifactId>
+										<versionRange>
+											[2.5.1,)
+										</versionRange>
+										<goals>
+											<goal>testCompile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>https://hit-dev.nist.gov:9001/repository/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>https://hit-dev.nist.gov:9001/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<scm>
+		<connection>scm:git:https://haffo@github.com/haffo/hit-iz-tool.git</connection>
+		<url>scm:git:https://haffo@github.com/haffo/hit-iz-tool.git</url>
+		<developerConnection>scm:git:https://haffo@github.com/haffo/hit-iz-tool.git</developerConnection>
+    <tag>hit-iz-tool-1.1.0</tag>
+  </scm>
+
+</project>

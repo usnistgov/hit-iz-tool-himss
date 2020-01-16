@@ -77,6 +77,7 @@ RUN cd /root/hl7-profile-validation && mvn -U clean install -Dmaven.wagon.http.s
 
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-core-xml
 RUN cd /root/hit-core-xml/ && git checkout master
+COPY pom_core.xml /root/hit-core-xml/pom.xml
 RUN cd /root/hit-core-xml && mvn -pl '!hit-core-xml-service,!hit-core-xml-api' install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
 RUN cd /root/hit-core-xml/hit-core-xml-domain && mvn -U install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
 RUN cd /root/hit-core-xml/hit-core-xml-repo && mvn -U install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.test.skip
@@ -90,6 +91,10 @@ RUN cd /root/schematronValidation && mvn -U clean install -Dmaven.wagon.http.ssl
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-core-hl7v2.git
 RUN cd /root/hit-core-hl7v2 && git checkout master
 COPY pom.xml /root/hit-core-hl7v2/pom.xml
+COPY pom_api.xml /root/hit-core-hl7v2/hit-core-hl7v2-api/pom.xml
+COPY pom_domain.xml /root/hit-core-hl7v2/hit-core-hl7v2-domain/pom.xml
+COPY pom_repo.xml /root/hit-core-hl7v2/hit-core-hl7v2-repo/pom.xml
+COPY pom_service.xml /root/hit-core-hl7v2/hit-core-hl7v2-service/pom.xml
 RUN cd /root/hit-core-hl7v2 && mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 # tools for the server side and client side
@@ -115,7 +120,8 @@ RUN cd /root/ && npm install -g bower
 # build the IZ tool
 RUN cd /root/ && git clone https://github.com/usnistgov/hit-iz-tool
 RUN cd /root/hit-iz-tool && git checkout apps/cni-new
-COPY pom_iz.xml /root/hit-iz-tool/hit-iz-web/pom.xml 
+COPY pom_iz.xml /root/hit-iz-tool/hit-iz-web/pom.xml
+COPY pom_iz_tool.xml /root/hit-iz-tool/pom.xml
 RUN cd /root/hit-iz-tool/hit-iz-web/client && npm install
 
 RUN cd /root/hit-iz-tool/hit-iz-web/client && bower install --allow-root

@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.nist.hit.core.xml</groupId>
+	<artifactId>hit-core-xml</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>hit-core-xml</name>
+	<description>hit-core-xml</description>
+	<packaging>pom</packaging>
+	<modules>
+ 		<module>hit-core-xml-domain</module>
+ 		<module>hit-core-xml-repo</module>
+ 		<module>hit-core-xml-service</module>
+ 		<module>hit-core-xml-api</module>
+	</modules>
+
+	<properties>
+        <hit-core.version>1.0.26</hit-core.version>
+ 	</properties>
+
+	<dependencies>		
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-service</artifactId>
+			<version>${hit-core.version}</version>
+		</dependency>
+ 		
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-transport</artifactId>
+			<version>${hit-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>gov.nist.hit.core</groupId>
+			<artifactId>hit-core-api</artifactId>
+			<version>${hit-core.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<!-- plugin to handle compile version -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+
+				<!-- <plugin> <artifactId>maven-eclipse-plugin</artifactId> <version>2.9</version> 
+					<configuration> <additionalProjectnatures> <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature> 
+					</additionalProjectnatures> <additionalBuildcommands> <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand> 
+					</additionalBuildcommands> <downloadSources>true</downloadSources> <downloadJavadocs>true</downloadJavadocs> 
+					</configuration> </plugin> -->
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
